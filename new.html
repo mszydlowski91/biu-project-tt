@@ -2,12 +2,14 @@
     <head>
         <meta charset="utf-8"/>
         <title>Blog</title>
-        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/blog.css">
+
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
-         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/firstcontroller.js"></script>
     </head>
     <body ng-controller="postController">
@@ -15,21 +17,21 @@
             <h1><a href="index.html">Blog</a></h1>
             <a href="new.html" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
         </div>
-        <ul class="postList">
+        <!--<ul class="postList">
   <li ng-repeat="post in postList ">
     <span>{{post.title}}</span>
     <p>{{post.text}}</p>
   </li>
-</ul>
+</ul>-->
         <div class="content container">
             <div class="col-md-8">
                 <h1>New post</h1>
-                    <form  ng-submit="addPost()" class="post-form" >
+                    <form class="post-form" >
                     <h4>Title:</h4>
-    		        <p><input type="text" name="title"></p>
+    		        <p><input type="text" name="title" ng-model="title"></p>
                     <h4>Text:</h4>
-                    <p><textarea name="text"></textarea></p>
-    		        <button type="submit" class="save btn btn-default">Save</button>
+                    <p><textarea name="text" ng-model="text"></textarea></p>
+    		        <button type="submit" class="save btn btn-default" ng-click="addPost()">Save</button>
     		    </form>
             </div>
         </div>

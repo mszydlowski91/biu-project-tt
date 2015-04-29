@@ -10,17 +10,18 @@ app.controller("postController", function($scope, $http) {
   })
 
   
-  $scope.addPost = function(){
-    console.log($scope.text);
-    console.log($scope.title);
+	$scope.addPost = function(){
+	    console.log($scope.title);
+	    console.log($scope.text);
+	    console.log(new Date());
     
-    $http.post('http://private-79b25-blogtt.apiary-mock.com/posts', {title: $scope.title, text: $scope.text }).
-    success(function(data, status, headers, config) {
-      
-    }).
-    error(function(data, status, headers, config) {
-     console.log("error posting");
-    });
-  }
+	    $http.post('http://private-79b25-blogtt.apiary-mock.com/posts', {title: $scope.title, text: $scope.text, published_at: new Date() }).
+	    	success(function(data, status, headers, config) {
+	      
+	    }).
+	    error(function(data, status, headers, config) {
+	     	console.log("error posting");
+	    });
+  	}
 });
 
