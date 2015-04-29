@@ -8,7 +8,12 @@ app.controller("postController", function($scope, $http) {
   error(function(data, status, headers, config) {
     console.log("error getting");
   })
-  $scope.newPost = function(){
+
+  
+  $scope.addPost = function(){
+    console.log($scope.text);
+    console.log($scope.title);
+    
     $http.post('http://private-79b25-blogtt.apiary-mock.com/posts', {title: $scope.title, text: $scope.text }).
     success(function(data, status, headers, config) {
       
