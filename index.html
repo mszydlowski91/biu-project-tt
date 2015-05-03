@@ -17,9 +17,6 @@
             <h1><a href="index.html">Blog</a></h1>
         </div>
 
-        <ul class="postList">
-            
-        </ul>
         <div class="content container">
             <div class="row">
                 <div class="col-md-8">
@@ -30,13 +27,9 @@
                         <h1><a href="">{{post.title}}</a></h1>
                         <p>{{post.text}}</p>
                     </div>                    
-<<<<<<< HEAD
-                    
-
-=======
                 </div>
                 <div class="col-md-4">
-                    <h1 data-ng-model="form_header">New post</h1>
+                    <h1>New post</h1>
                     <form class="post-form" >
                         <h4>Title:</h4>
                         <p><input type="text" name="title" data-ng-model="title"></p>
@@ -44,7 +37,6 @@
                         <p><textarea name="text" data-ng-model="text"></textarea></p>
                         <button type="submit" class="save btn btn-default" ng-click="addPost()">Save</button>
                     </form>
->>>>>>> 97c428d4b9a208409326d2c39bb1dc0f56d88eac
                 </div>
             </div>
         </div>
