@@ -2,7 +2,7 @@ var app = angular.module("first", []);
 
 app.controller("postController", function($scope, $http) {
 
-    var temp;
+    var backupPostContent;
     var path='http://private-79b25-blogtt.apiary-mock.com';
 
     $http.get(path+'/posts')
@@ -42,20 +42,18 @@ app.controller("postController", function($scope, $http) {
        
     };
 
-    $scope.editPost = function (post) {  
-
-     
+    $scope.editPost = function (post) {       
         $scope.deletePost(post);
         $scope.form_header = "Edit post";
         $scope.title = post.title;
         $scope.text = post.text;
-        temp = post;
+        backupPostContent = post;
     };
 
     $scope.cancelEdit = function (){
-        $http.post(path+'/posts', temp)
+        $http.post(path+'/posts', backupPostContent)
         .success(function(data, status, headers, config) {
-                $scope.postList.push(temp);
+                $scope.postList.push(backupPostContent);
         })
         .error(function(data, status, headers, config) {
             console.log("error posting "+ status);
@@ -64,6 +62,18 @@ app.controller("postController", function($scope, $http) {
         $scope.title = "";
         $scope.text = "";
     };
+
+    $scope.filterPosts = function (){
+        var filterTerm = $scope.filter;
+        var filteredList = [];
+        var i;
+        for (i = 0; i < $scope.postList.length; i++){
+            if($scope.postList[i].title.indexOf(filterTerm) >= 0){
+                filteredList.push($scope.postList[i]);
+            }
+        }
+        $scope.postList = filteredList;
+    }
 
 });
 
