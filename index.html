@@ -19,13 +19,13 @@
 
         <div>
             <h3> Search </h3>
-            <p><input data-ng-model = "filter"></input> <button data-ng-click="filterPosts()">Go</button></p>
+            <p><input data-ng-model = "filterTerm"></input> <button data-ng-click="filterStatus = filterTerm">Go</button></p>
         </div>
 
         <div class="content container">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="post" data-ng-repeat="post in postList">
+                    <div class="post" data-ng-repeat="post in postList | filter : filterStatus">
                         <div class="date">published: {{post.published_at | date:'dd-MM-yyyy, HH:mm'}}</div>
                         <a class="btn btn-default" data-ng-click="editPost(post)"><span class="glyphicon glyphicon-pencil"></span></a>
                         <a class="btn btn-default" data-ng-click="deletePost(post)"><span class="glyphicon glyphicon-remove"></span></a>
