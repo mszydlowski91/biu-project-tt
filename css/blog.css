@@ -4,6 +4,9 @@ body {
     padding: 0px 15px;
 }
 
+.row-centered {
+    text-align:right;
+}
 
 .page-header {
     background-color: #cb892c;

@@ -1,9 +1,8 @@
-var app = angular.module("first", []);
+var app = angular.module("blog", []);
 
 app.controller("postController", function($scope, $http) {
 
-    var backupPostContent;
-    var path='http://private-79b25-blogtt.apiary-mock.com';
+    var path = 'http://private-79b25-blogtt.apiary-mock.com';
 
     $http.get(path+'/posts')
         .success(function(data, status, headers, config) {
@@ -35,13 +34,14 @@ app.controller("postController", function($scope, $http) {
 
     $scope.deletePost = function(post){
         var del = confirm("Are you sure you want to delete or modify this post?");
-        if(del){
+        if(del){ 
             var i = $scope.postList.indexOf(post);
             $scope.postList.splice(i,1);
         }
     };
 
-    $scope.editPost = function (post) {
+    var backupPostContent;
+    $scope.editPost = function (post) {       
         $scope.deletePost(post);
         $scope.form_header = "Edit post";
         $scope.title = post.title;
@@ -62,16 +62,34 @@ app.controller("postController", function($scope, $http) {
         $scope.text = "";
     };
 
-    $scope.filterPosts = function (){
-        var filterTerm = $scope.filter;
-        var filteredList = [];
+    $scope.filterPosts = function (post){
+        var filterTerm = $scope.filterTerm;
+        console.log(filterTerm);
+       // if angular.isUndefined($scope.filterTerm) return true;
+       // $scope.filterStatus = null;
+        if (post.title.indexOf(filterTerm)!=-1)  {
+            if ($scope.searchInContent) {
+                if (post.text.indexOf(filterTerm)!=-1) {
+                    return true;
+                }
+            } 
+            else return true;
+        }
+        return false;
+       // return val.title == filterTerm;*/
+        /*var filteredList = [];
         var i;
         for (i = 0; i < $scope.postList.length; i++){
-            if($scope.postList[i].title.indexOf(filterTerm) >= 0){
-                filteredList.push($scope.postList[i]);
+            if($scope.postList[i].title.indexOf(filterTerm) >= 0) {
+                if ($scope.searchInContent) {
+                    if (post.text.indexOf(filterTerm)!=-1) {
+                        filteredList.push($scope.postList[i]);
+                    }
+                } else filteredList.push($scope.postList[i]);                
             }
         }
         $scope.postList = filteredList;
     }
 
 });
+
