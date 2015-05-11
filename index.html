@@ -19,28 +19,15 @@
 
         <div>
             <h3> Search </h3>
-            <p><input data-ng-model = "filterTerm"></input> <button data-ng-click="filterStatus = filterTerm">Go</button></p>
-            <input type="radio" name="group1"> By topic </input>
-            <input type="radio" name="group1"> By content </input>
+            <p><input data-ng-model = "filterTerm"></input> <a class="btn btn-default" data-ng-click="filter(filterTerm)"><span class="glyphicon glyphicon-search"></span></a></p>
+            <input type="radio" name="group1" value="topic" id = "title"> By topic </input>
+            <input type="radio" name="group1" value="content" id = "content"> By content </input>
         </div>
 
         <div class="content container">
-            <div class="row row-centered">
-                <div class="col-md-12">
-                    <span class="pull-right">
-                        <input data-ng-model="filterTerm"/>
-                        <a class="btn btn-default" data-ng-click="filterPosts()"><span class="glyphicon glyphicon-search"></span></a></br>
-                    </span>
-                </div>
-                <div class="col-md-12">
-                    <span class="pull-right">
-                        <input type="checkbox" data-ng-model="searchInContent"/> Search also in content
-                    </span>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-md-8 col-centered">
-                    <div class="post" data-ng-repeat="post in postList | filter :  filterPosts">
+                    <div class="post" data-ng-repeat="post in postList | filter : {title: titleFilter, content: contentFilter}">
                         <div class="date">published: {{post.published_at | date:'dd-MM-yyyy, HH:mm'}}</div>
                         <a class="btn btn-default" data-ng-click="editPost(post)"><span class="glyphicon glyphicon-pencil"></span></a>
                         <a class="btn btn-default" data-ng-click="deletePost(post)"><span class="glyphicon glyphicon-remove"></span></a>

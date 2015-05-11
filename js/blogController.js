@@ -3,6 +3,8 @@ var app = angular.module("blog", []);
 app.controller("postController", function($scope, $http) {
 
     var path = 'http://private-79b25-blogtt.apiary-mock.com';
+    $scope.titleFilter = "";
+    $scope.contentFilter = "";
 
     $http.get(path+'/posts')
         .success(function(data, status, headers, config) {
@@ -62,34 +64,45 @@ app.controller("postController", function($scope, $http) {
         $scope.text = "";
     };
 
-    $scope.filterPosts = function (post){
-        var filterTerm = $scope.filterTerm;
-        console.log(filterTerm);
-       // if angular.isUndefined($scope.filterTerm) return true;
-       // $scope.filterStatus = null;
-        if (post.title.indexOf(filterTerm)!=-1)  {
-            if ($scope.searchInContent) {
-                if (post.text.indexOf(filterTerm)!=-1) {
-                    return true;
-                }
-            } 
-            else return true;
-        }
-        return false;
-       // return val.title == filterTerm;*/
-        /*var filteredList = [];
-        var i;
-        for (i = 0; i < $scope.postList.length; i++){
-            if($scope.postList[i].title.indexOf(filterTerm) >= 0) {
-                if ($scope.searchInContent) {
-                    if (post.text.indexOf(filterTerm)!=-1) {
-                        filteredList.push($scope.postList[i]);
-                    }
-                } else filteredList.push($scope.postList[i]);                
-            }
-        }
-        $scope.postList = filteredList;
+
+    $scope.filter = function(term){
+        if(document.getElementById('title').checked) {
+            $scope.titleFilter = term;
+            $scope.contentFilter = "";
+        }else if(document.getElementById('content').checked) {
+            $scope.titleFilter = "";
+            $scope.contentFilter = term;
+        }        
     }
+
+    // $scope.filterPosts = function (post){
+    //     var filterTerm = $scope.filterTerm;
+    //     console.log(filterTerm);
+    //    // if angular.isUndefined($scope.filterTerm) return true;
+    //    // $scope.filterStatus = null;
+    //     if (post.title.indexOf(filterTerm)!=-1)  {
+    //         if ($scope.searchInContent) {
+    //             if (post.text.indexOf(filterTerm)!=-1) {
+    //                 return true;
+    //             }
+    //         } 
+    //         else return true;
+    //     }
+    //     return false;
+    //    // return val.title == filterTerm;*/
+    //     /*var filteredList = [];
+    //     var i;
+    //     for (i = 0; i < $scope.postList.length; i++){
+    //         if($scope.postList[i].title.indexOf(filterTerm) >= 0) {
+    //             if ($scope.searchInContent) {
+    //                 if (post.text.indexOf(filterTerm)!=-1) {
+    //                     filteredList.push($scope.postList[i]);
+    //                 }
+    //             } else filteredList.push($scope.postList[i]);                
+    //         }
+    //     }
+    //     $scope.postList = filteredList;
+    // }
 
 });
 
