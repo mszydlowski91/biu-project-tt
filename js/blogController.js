@@ -6,6 +6,8 @@ app.controller("postController", function($scope, $http) {
     $scope.titleFilter = "";
     $scope.contentFilter = "";
 
+    $('.datepicker').datepicker();
+
     $http.get(path+'/posts')
         .success(function(data, status, headers, config) {
             $scope.postList = data;
@@ -66,13 +68,7 @@ app.controller("postController", function($scope, $http) {
 
 
     $scope.filter = function(term){
-        if(document.getElementById('title').checked) {
-            $scope.titleFilter = term;
-            $scope.contentFilter = "";
-        }else if(document.getElementById('content').checked) {
-            $scope.titleFilter = "";
-            $scope.contentFilter = term;
-        }        
+          
     }
 
     // $scope.filterPosts = function (post){
