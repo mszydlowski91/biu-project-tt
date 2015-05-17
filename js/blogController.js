@@ -1,6 +1,6 @@
 var app = angular.module("blog", []);
 
-app.controller("postController", function($scope, $http) {
+app.controller("blogController", function($scope, $http) {
 
     var path = 'http://private-79b25-blogtt.apiary-mock.com';
     $scope.titleFilter = "";
@@ -100,5 +100,10 @@ app.controller("postController", function($scope, $http) {
     //     $scope.postList = filteredList;
     // }
 
+})
+.directive('post', function(){
+    return {
+        templateUrl: 'includes/post.html'
+    };
 });
 
