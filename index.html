@@ -48,8 +48,8 @@
                         <div class="btn-group" role="group" aria-label="...">
                           <button type="reset" class="btn btn-default" ng-if="formMode=='NEW'">Clear</button>
                           <button type="button" class="btn btn-default" ng-if="formMode=='NEW'" ng-click="addPost()">Save</button>
-                          <button type="button" class="btn btn-default" ng-if="formMode=='EDIT'" ng-click ="cancelEdit()">Cancel edit</button>
-                          <button type="button" class="btn btn-default" ng-if="formMode=='EDIT'">Confirm edit</button>
+                          <button type="reset" class="btn btn-default" ng-if="formMode=='EDIT'" ng-click ="cancelEdit()">Cancel edit</button>
+                          <button type="button" class="btn btn-default" ng-if="formMode=='EDIT'" ng-click="confirmEdit()">Confirm edit</button>
                         </div>
                     </form>
                 </div>
