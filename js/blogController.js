@@ -3,8 +3,7 @@ var app = angular.module("blog", []);
 app.controller("postController", function($scope, $http) {
 
     var path = 'http://private-79b25-blogtt.apiary-mock.com';
-    $scope.titleFilter = "";
-    $scope.contentFilter = "";
+   
 
     $('.datepicker').datepicker();
 
@@ -21,7 +20,8 @@ app.controller("postController", function($scope, $http) {
         var post = {
             title: $scope.title,
             text: $scope.text,
-            published_at: new Date()
+            published_at: new Date(),
+            tags: $scope.tags
           };
 
 	    $http.post(path+'/posts', post)
@@ -34,6 +34,7 @@ app.controller("postController", function($scope, $http) {
 
         $scope.title = "";
         $scope.text = "";
+        $scope.tags = [];
   	};
 
     $scope.deletePost = function(post){
@@ -67,38 +68,60 @@ app.controller("postController", function($scope, $http) {
     };
 
 
-    $scope.filter = function(term){
-          
-    }
-
-    // $scope.filterPosts = function (post){
-    //     var filterTerm = $scope.filterTerm;
-    //     console.log(filterTerm);
-    //    // if angular.isUndefined($scope.filterTerm) return true;
-    //    // $scope.filterStatus = null;
-    //     if (post.title.indexOf(filterTerm)!=-1)  {
-    //         if ($scope.searchInContent) {
-    //             if (post.text.indexOf(filterTerm)!=-1) {
-    //                 return true;
-    //             }
-    //         } 
-    //         else return true;
-    //     }
-    //     return false;
-    //    // return val.title == filterTerm;*/
-    //     /*var filteredList = [];
-    //     var i;
-    //     for (i = 0; i < $scope.postList.length; i++){
-    //         if($scope.postList[i].title.indexOf(filterTerm) >= 0) {
-    //             if ($scope.searchInContent) {
-    //                 if (post.text.indexOf(filterTerm)!=-1) {
-    //                     filteredList.push($scope.postList[i]);
-    //                 }
-    //             } else filteredList.push($scope.postList[i]);                
-    //         }
-    //     }
-    //     $scope.postList = filteredList;
-    // }
-
 });
+
+
+app.filter('myfilter', function() {
+    return function(postList, $scope) {
+        var out = [];
+        var term = $scope.filterTerm;
+        var dateFrom;
+        var dateTo;
+
+        if($scope.dateFrom){
+            dateFrom  = Date.parse($scope.dateFrom);
+        }
+        else{
+            dateFrom = Number.NEGATIVE_INFINITY;
+        }
+
+        if($scope.dateTo){
+            dateTo = Date.parse($scope.dateTo);
+        }
+        else{
+            dateTo = Number.POSITIVE_INFINITY;
+        }
+        
+       
+
+        if (!postList) return out;
+        if (!term) return postList;
+
+        var i;
+        for (i = 0; i < postList.length; i++) {            
+
+            if(((Date.parse(postList[i].published_at) >= dateFrom) 
+                && (Date.parse(postList[i].published_at) <= dateTo)))
+            {
+
+                if (postList[i].title.indexOf(term) >= 0) {
+                    out.push(postList[i]);         
+                }
+ 
+                else if ($scope.isContentFilterOn) {
+                    if (postList[i].text.indexOf(term) >= 0) {
+                        out.push(postList[i]);        
+                    }
+                }    
+            }
+      
+        
+        }
+    
+    return out;
+  }
+});
+
+
+
 
