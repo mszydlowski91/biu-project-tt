@@ -38,14 +38,24 @@ app.controller("blogController", function($scope, $http) {
 
     $scope.deletePost = function(post){
         var del = confirm("Are you sure you want to delete or modify this post?");
-        if(del){ 
+        if(del){
             var i = $scope.postList.indexOf(post);
-            $scope.postList.splice(i,1);
+            var delPost={
+                "delete_id": 1
+            };
+
+            $http.delete(path+'/posts', delPost)
+              .success(function(data, status, headers, config) {
+                $scope.postList.splice(i,1);
+      	             })
+              .error(function(data, status, headers, config) {
+      	     	console.log("Error during post deleting: " + status);
+      	       });
         }
     };
 
     var backupPostContent;
-    $scope.editPost = function (post) {       
+    $scope.editPost = function (post) {
         $scope.deletePost(post);
         $scope.form_header = "Edit post";
         $scope.title = post.title;
@@ -68,7 +78,7 @@ app.controller("blogController", function($scope, $http) {
 
 
     $scope.filter = function(term){
-          
+
     }
 
     // $scope.filterPosts = function (post){
@@ -81,7 +91,7 @@ app.controller("blogController", function($scope, $http) {
     //             if (post.text.indexOf(filterTerm)!=-1) {
     //                 return true;
     //             }
-    //         } 
+    //         }
     //         else return true;
     //     }
     //     return false;
@@ -94,7 +104,7 @@ app.controller("blogController", function($scope, $http) {
     //                 if (post.text.indexOf(filterTerm)!=-1) {
     //                     filteredList.push($scope.postList[i]);
     //                 }
-    //             } else filteredList.push($scope.postList[i]);                
+    //             } else filteredList.push($scope.postList[i]);
     //         }
     //     }
     //     $scope.postList = filteredList;
@@ -106,4 +116,3 @@ app.controller("blogController", function($scope, $http) {
         templateUrl: 'includes/post.html'
     };
 });
-
