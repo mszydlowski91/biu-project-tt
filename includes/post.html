@@ -1,0 +1,18 @@
+<div class="date">
+    published: {{post.published_at | date:'dd-MM-yyyy, HH:mm'}}
+</div>
+<a class="btn btn-default" data-ng-click="editPost(post)">
+    <span class="glyphicon glyphicon-pencil"></span>
+</a>
+<a class="btn btn-default" data-ng-click="deletePost(post)">
+    <span class="glyphicon glyphicon-remove"></span>
+</a>
+<h1>
+    <a href="">{{post.title}}</a>
+</h1>
+<ul class="list-inline">
+    <li ng-repeat="tag in post.tags">
+        {{ tag }}{{$last ? '' : ','}}
+    </li>
+</ul>
+<p>{{post.text}}</p>

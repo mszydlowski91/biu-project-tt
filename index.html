@@ -12,7 +12,7 @@
         <script type="text/javascript" src="js/blogController.js"></script>        
     </head>
 
-    <body data-ng-controller="postController">
+    <body data-ng-controller="blogController">
         <div class="page-header">
             <h1><a href="index.html">Blog</a></h1>
         </div>
@@ -20,7 +20,7 @@
         <div id="wrap">
             <div id="left_col">
                 <h3> Search </h3>
-                <p><input data-ng-model = "filterTerm"></input> <a class="btn btn-default" data-ng-click="filter(filterTerm)"><span class="glyphicon glyphicon-search"></span></a></p>
+                <p><input data-ng-model = "filterTerm"/> <a class="btn btn-default" data-ng-click="filter(filterTerm)"><span class="glyphicon glyphicon-search"></span></a></p>
             </div>
             <div id="right_col">
                 <div id="wrap">
@@ -41,8 +41,6 @@
             </div>  
         </div>      
 
-
-
         <div class="content container" style = "padding-top: 300px">
             <div class="row">
                 <div class="col-md-8 col-centered">
@@ -51,20 +49,23 @@
                         <a class="btn btn-default" data-ng-click="editPost(post)"><span class="glyphicon glyphicon-pencil"></span></a>
                         <a class="btn btn-default" data-ng-click="deletePost(post)"><span class="glyphicon glyphicon-remove"></span></a>
                         <h1><a href="">{{post.title}}</a></h1>
-                        <p>{{post.text}}</p>
-                        
-                    </div>                    
+                        <p>{{post.text}}</p>                        
+                    </div>  
                 </div>
                 <div class="col-md-4 col-centered">
-                    <h1>New post</h1>
+                    <h1 ng-if="formMode=='NEW'">New post!</h1>
+                    <h1 ng-if="formMode=='EDIT'">Edit post!</h1>
                     <form class="post-form" >
                         <h4>Title:</h4>
                         <p><input type="text" name="title" data-ng-model="title"></p>
                         <h4>Text:</h4>
                         <p><textarea name="text" data-ng-model="text"></textarea></p>
-                        <button type="submit" class="save btn btn-default" ng-click="addPost()">Save</button>
-                        <button type="reset" class="btn btn-default">Clear</button>
-                        <button type="button" class="btn btn-default" ng-click ="cancelEdit()">Cancel edit</button>
+                        <div class="btn-group" role="group" aria-label="...">
+                          <button type="reset" class="btn btn-default" ng-if="formMode=='NEW'">Clear</button>
+                          <button type="button" class="btn btn-default" ng-if="formMode=='NEW'" ng-click="addPost()">Save</button>
+                          <button type="reset" class="btn btn-default" ng-if="formMode=='EDIT'" ng-click ="cancelEdit()">Cancel edit</button>
+                          <button type="button" class="btn btn-default" ng-if="formMode=='EDIT'" ng-click="confirmEdit()">Confirm edit</button>
+                        </div>
                     </form>
                 </div>
             </div>
