@@ -26,30 +26,31 @@
                 <input type="checkbox" value="topic" id = "title"> In topics </input> <br>
                 <input type="checkbox" value="content" id = "content"> In contents </input> <br>
                 <input type="checkbox" value="content" id = "content"> In tags </input> <br>
-                <input type="text" type="text" class="datepicker"> <br>
-
+                <input type="text" type="text" class="datepicker"><br>
             </div>
         </div>
-
-
 
         <div class="content container" style = "padding-top: 300px">
             <div class="row">
                 <div class="col-md-8 col-centered">
-                    <div class="post" data-ng-repeat="post in postList | filter : {title: titleFilter, content: contentFilter}">
+                    <div class="post" data-ng-repeat="post in postList | filter : {title: titleFilter, content: contentFilter} | orderBy: 'published_at'">
                         <post/>
                     </div>
                 </div>
                 <div class="col-md-4 col-centered">
-                    <h1>New post</h1>
+                    <h1 ng-if="formMode=='NEW'">New post!</h1>
+                    <h1 ng-if="formMode=='EDIT'">Edit post!</h1>
                     <form class="post-form" >
                         <h4>Title:</h4>
                         <p><input type="text" name="title" data-ng-model="title"></p>
                         <h4>Text:</h4>
                         <p><textarea name="text" data-ng-model="text"></textarea></p>
-                        <button type="submit" class="save btn btn-default" ng-click="addPost()">Save</button>
-                        <button type="reset" class="btn btn-default">Clear</button>
-                        <button type="button" class="btn btn-default" ng-click ="cancelEdit()">Cancel edit</button>
+                        <div class="btn-group" role="group" aria-label="...">
+                          <button type="reset" class="btn btn-default" ng-if="formMode=='NEW'">Clear</button>
+                          <button type="button" class="btn btn-default" ng-if="formMode=='NEW'" ng-click="addPost()">Save</button>
+                          <button type="button" class="btn btn-default" ng-if="formMode=='EDIT'" ng-click ="cancelEdit()">Cancel edit</button>
+                          <button type="button" class="btn btn-default" ng-if="formMode=='EDIT'">Confirm edit</button>
+                        </div>
                     </form>
                 </div>
             </div>

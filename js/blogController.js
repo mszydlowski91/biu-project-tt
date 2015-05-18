@@ -5,6 +5,7 @@ app.controller("blogController", function($scope, $http) {
     var path = 'http://private-79b25-blogtt.apiary-mock.com';
     $scope.titleFilter = "";
     $scope.contentFilter = "";
+    $scope.formMode="NEW";
 
     $('.datepicker').datepicker();
 
@@ -15,7 +16,6 @@ app.controller("blogController", function($scope, $http) {
         .error(function(data, status, headers, config) {
             console.log("error getting " + status);
         });
-  $scope.form_header="New post";
 
 	$scope.addPost = function(){
         var post = {
@@ -37,7 +37,7 @@ app.controller("blogController", function($scope, $http) {
   	};
 
     $scope.deletePost = function(post){
-        var del = confirm("Are you sure you want to delete or modify this post?");
+        var del = confirm("Are you sure you want to delete this post?");
         if(del){
             var i = $scope.postList.indexOf(post);
             var delPost={
@@ -54,26 +54,12 @@ app.controller("blogController", function($scope, $http) {
         }
     };
 
-    var backupPostContent;
     $scope.editPost = function (post) {
-        $scope.deletePost(post);
-        $scope.form_header = "Edit post";
-        $scope.title = post.title;
-        $scope.text = post.text;
-        backupPostContent = post;
+        $scope.formMode = "EDIT";
     };
 
     $scope.cancelEdit = function (){
-        $http.post(path+'/posts', backupPostContent)
-        .success(function(data, status, headers, config) {
-                $scope.postList.push(backupPostContent);
-                $scope.form_header="New post";
-        })
-        .error(function(data, status, headers, config) {
-            console.log("error posting "+ status);
-        });
-        $scope.title = "";
-        $scope.text = "";
+        $scope.formMode = "NEW";
     };
 
 
