@@ -9,7 +9,7 @@
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/blogController.js"></script>        
+        <script type="text/javascript" src="js/blogController.js"></script>
     </head>
 
     <body data-ng-controller="blogController">
@@ -17,53 +17,55 @@
             <h1><a href="index.html">Blog</a></h1>
         </div>
 
-        <div id="wrap">
-            <div id="left_col">
-                <h3> Search </h3>
-                <p><input data-ng-model = "filterTerm"/> </input> <a class="btn btn-default" data-ng-click="filter(filterTerm)"><span class="glyphicon glyphicon-search"></span></a></p>
-            </div>
-            <div id="right_col">
-                <div id="wrap">
-                    <div id="left_col">
-                        <input data-ng-model = "isContentFilterOn" ng-init = "false" type="checkbox" value="content" id = "content" > In contents </input> <br>
-                        <input type="checkbox" value="content" id = "content"> In tags </input> <br>
-                        Between <input type="text" data-ng-model = "dateFrom" type="text" class="datepicker"></input> 
-                    </div>
-
-                    <div id="right_col">
-                        <br>
-                        <br>
-                        <br>                        
-                        and
-                        <input type="text" data-ng-model = "dateTo" type="text" class="datepicker"></input> <br>
-                    </div>
-                </div>
-            </div>  
-        </div>      
-
-        <div class="content container" style = "padding-top: 300px">
+        <div class="content container">
             <div class="row">
-                <div class="col-md-8 col-centered">
-                    <div class="post" data-ng-repeat="post in postList | myfilter : this">
-                        <post/>
-                    </div>  
-                </div>
-                <div class="col-md-4 col-centered">
-                    <h1 ng-if="formMode=='NEW'">New post!</h1>
-                    <h1 ng-if="formMode=='EDIT'">Edit post!</h1>
-                    <form class="post-form" >
-                        <h4>Title:</h4>
-                        <p><input type="text" name="title" data-ng-model="title"></p>
-                        <h4>Text:</h4>
-                        <p><textarea name="text" data-ng-model="text"></textarea></p>
-                        <div class="btn-group" role="group" aria-label="...">
-                            <button type="reset" class="btn btn-default" ng-if="formMode=='NEW'">Clear</button>
-                            <button type="button" class="btn btn-default" ng-if="formMode=='NEW'" ng-click="addPost()">Save</button>
-                            <button type="reset" class="btn btn-default" ng-if="formMode=='EDIT'" ng-click ="cancelEdit()">Cancel edit</button>
-                            <button type="button" class="btn btn-default" ng-if="formMode=='EDIT'" ng-click="confirmEdit()">Confirm edit</button>
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="input-group">
+                                <input class="form-control" data-ng-model="filterTerm" placeholder="Search..."/>
+                                <div class="input-group-btn">
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-default" ng-click="visible=!visible" ng-init="false">&nbsp<span class="caret"></span></button>
+                                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </form>
+                        <ul class="list-group nav nav-pills nav-stacked" ng-show="visible">
+                            <li class="list-group-item"><a href ng-click="isContentFilterOn=!isContentFilterOn"><input data-ng-model="isContentFilterOn" ng-init="false" type="checkbox"/> In contents</a></li>
+                            <li class="list-group-item"><a href ng-click="isTagsFilterOn=!isTagsFilterOn"><input data-ng-model="isTagsFilterOn" ng-init="false" type="checkbox"/> In tags</a></li>
+                            <li class="list-group-item">
+                                Between <input type="text" data-ng-model = "dateFrom" type="text" class="datepicker"/>
+                                and
+                                <input type="text" data-ng-model = "dateTo" type="text" class="datepicker"/>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-centered">
+                <div class="post" data-ng-repeat="post in postList | myfilter : this |orderBy: 'published_at'">
+                    <post/>
+                </div>
+            </div>
+            <div class="col-md-4 col-centered">
+                <h1 ng-if="formMode=='NEW'">New post!</h1>
+                <h1 ng-if="formMode=='EDIT'">Edit post!</h1>
+                <form class="post-form" >
+                    <h4>Title:</h4>
+                    <p><input type="text" name="title" data-ng-model="title"></p>
+                    <h4>Text:</h4>
+                    <p><textarea name="text" data-ng-model="text"></textarea></p>
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="reset" class="btn btn-default" ng-if="formMode=='NEW'">Clear</button>
+                        <button type="button" class="btn btn-default" ng-if="formMode=='NEW'" ng-click="addPost()">Save</button>
+                        <button type="reset" class="btn btn-default" ng-if="formMode=='EDIT'" ng-click ="cancelEdit()">Cancel edit</button>
+                        <button type="button" class="btn btn-default" ng-if="formMode=='EDIT'" ng-click="confirmEdit()">Confirm edit</button>
+                    </div>
+                </form>
             </div>
         </div>
 
