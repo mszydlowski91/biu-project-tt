@@ -65,12 +65,10 @@ app.controller("blogController", function($scope, $http) {
         }
     };
 
-    var editedPostIndex;
-    var existingPosts;
     $scope.editPost = function (post) {
         $scope.formMode = "EDIT";
-        editedPostIndex = $scope.postList.indexOf(post);
-        existingPosts = $scope.postList;
+        $scope.editedPostIndex = $scope.postList.indexOf(post);
+        $scope.existingPosts = $scope.postList;
         $scope.postList = [post];
         $scope.text = post.text;
         $scope.title = post.title;
@@ -79,20 +77,20 @@ app.controller("blogController", function($scope, $http) {
     $scope.confirmEdit = function(){
         if (validateForm($scope.title, $scope.text)) {
           var editedPost = {
-            "post_id": editedPostIndex,
+            "post_id": $scope.editedPostIndex,
             "new_title": $scope.title,
             "new_text": $scope.text
           };
           $http.put(path+'/posts', editedPost)
             .success(function(data, status, headers, config) {
-                existingPosts[editedPostndex].title=$scope.title;
-                existingPosts[editedPostIndex].text=$scope.text;
-                $scope.postList = existingPosts;
+                $scope.existingPosts[$scope.editedPostIndex].title=$scope.title;
+                $scope.existingPosts[$scope.editedPostIndex].text=$scope.text;
+                $scope.postList = $scope.existingPosts;
                 $scope.formMode = "NEW";
                 $scope.title = $scope.initial;
                 $scope.text = $scope.initial;
-                existingPosts = null;
-                editedPostIndex = null;
+                $scope.existingPosts = null;
+                $scope.editedPostIndex = null;
             })
             .error(function(data, status, headers, config) {
                 console.log("Error during post editing: " + status);
@@ -102,7 +100,7 @@ app.controller("blogController", function($scope, $http) {
 
     $scope.cancelEdit = function (){
         $scope.formMode = "NEW";
-        $scope.postList = existingPosts;
+        $scope.postList = $scope.existingPosts;
         //$scope.text = $scope.initial;
         $scope.title = "";
         $scope.text = "";
