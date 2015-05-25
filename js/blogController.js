@@ -24,7 +24,7 @@ app.controller("blogController", function($scope, $http) {
             text: $scope.text,
             published_at: new Date(),
             tags: $scope.tags
-          };   
+          };
 
         if (validateForm(post.title,post.text)) {
           $http.post(path+'/posts', post)
@@ -34,7 +34,7 @@ app.controller("blogController", function($scope, $http) {
             .error(function(data, status, headers, config) {
      	          console.log("error posting " + status);
             });
-        }      
+        }
         $scope.title = $scope.initial;
         $scope.text = $scope.initial;
         $scope.tags = [];
@@ -51,13 +51,13 @@ app.controller("blogController", function($scope, $http) {
     $scope.deletePost = function(post){
         var del = confirm("Are you sure you want to delete this post?");
         if(del){
-          var i = $scope.postList.indexOf(post);
+          var deletePostIndex = $scope.postList.indexOf(post);
           var delPost={
-              "delete_id": i
+              "delete_id": deletePostIndex
           };
           $http.delete(path+'/posts', delPost)
             .success(function(data, status, headers, config) {
-                $scope.postList.splice(i,1);
+                $scope.postList.splice(deletePostIndex,1);
             })
             .error(function(data, status, headers, config) {
                 console.log("Error during post deleting: " + status);
@@ -65,11 +65,11 @@ app.controller("blogController", function($scope, $http) {
         }
     };
 
-    var editedPostindex;
+    var editedPostIndex;
     var existingPosts;
     $scope.editPost = function (post) {
         $scope.formMode = "EDIT";
-        editedPostindex = $scope.postList.indexOf(post);
+        editedPostIndex = $scope.postList.indexOf(post);
         existingPosts = $scope.postList;
         $scope.postList = [post];
         $scope.text = post.text;
@@ -79,20 +79,20 @@ app.controller("blogController", function($scope, $http) {
     $scope.confirmEdit = function(){
         if (validateForm($scope.title, $scope.text)) {
           var editedPost = {
-            "post_id": editedPostindex,
+            "post_id": editedPostIndex,
             "new_title": $scope.title,
             "new_text": $scope.text
           };
           $http.put(path+'/posts', editedPost)
             .success(function(data, status, headers, config) {
-                existingPosts[editedPostindex].title=$scope.title;
-                existingPosts[editedPostindex].text=$scope.text;
+                existingPosts[editedPostndex].title=$scope.title;
+                existingPosts[editedPostIndex].text=$scope.text;
                 $scope.postList = existingPosts;
                 $scope.formMode = "NEW";
                 $scope.title = $scope.initial;
                 $scope.text = $scope.initial;
                 existingPosts = null;
-                editedPostindex = null;
+                editedPostIndex = null;
             })
             .error(function(data, status, headers, config) {
                 console.log("Error during post editing: " + status);
@@ -131,33 +131,33 @@ app.filter('myfilter', function() {
         else{
             dateTo = Number.POSITIVE_INFINITY;
         }
-        
-       
+
+
 
         if (!postList) return out;
         if (!term) return postList;
 
         var i;
-        for (i = 0; i < postList.length; i++) {            
+        for (i = 0; i < postList.length; i++) {
 
-            if(((Date.parse(postList[i].published_at) >= dateFrom) 
+            if(((Date.parse(postList[i].published_at) >= dateFrom)
                 && (Date.parse(postList[i].published_at) <= dateTo)))
             {
 
                 if (postList[i].title.indexOf(term) >= 0) {
-                    out.push(postList[i]);         
+                    out.push(postList[i]);
                 }
- 
+
                 else if ($scope.isContentFilterOn) {
                     if (postList[i].text.indexOf(term) >= 0) {
-                        out.push(postList[i]);        
+                        out.push(postList[i]);
                     }
-                }    
+                }
             }
-      
-        
+
+
         }
-    
+
     return out;
   }
 });
@@ -170,4 +170,3 @@ app.directive('post', function(){
         templateUrl: 'includes/post.html'
     };
 });
-
