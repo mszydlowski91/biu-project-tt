@@ -109,8 +109,8 @@ app.controller("blogController", function($scope, $http) {
 });
 
 
-app.filter('myfilter', function() {
-    return function(postList, $scope) {
+app.filter('myfilter', ['$scope', function($scope) {
+    return function(postList) {
         var out = [];
         var term = $scope.filterTerm;
         var dateFrom;
@@ -158,7 +158,7 @@ app.filter('myfilter', function() {
 
     return out;
   }
-});
+}]);
 
 
 

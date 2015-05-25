@@ -38,7 +38,7 @@
                             <li class="list-group-item">
                                 Between <input type="text" data-ng-model = "dateFrom" type="text" class="datepicker"/>
                                 and
-                                <input type="text" data-ng-model = "dateTo" type="text" class="datepicker"/>
+                                <input type="text" data-ng-model="dateTo" type="text" class="datepicker"/>
                             </li>
                         </ul>
                     </div>
@@ -47,7 +47,7 @@
         </div>
         <div class="row">
             <div class="col-md-8 col-centered">
-                <div class="post" data-ng-repeat="post in postList | myfilter : this |orderBy: 'published_at'">
+                <div class="post" data-ng-repeat="post in postList | myfilter | orderBy: 'published_at'">
                     <post/>
                 </div>
             </div>
