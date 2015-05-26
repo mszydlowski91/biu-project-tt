@@ -131,7 +131,6 @@ app.filter('myfilter', function() {
         }
 
 
-
         if (!postList) return out;
         if (!term) return postList;
 
@@ -144,13 +143,23 @@ app.filter('myfilter', function() {
 
                 if (postList[i].title.indexOf(term) >= 0) {
                     out.push(postList[i]);
+                    break;
                 }
 
-                else if ($scope.isContentFilterOn) {
+                if ($scope.isContentFilterOn) {
                     if (postList[i].text.indexOf(term) >= 0) {
                         out.push(postList[i]);
+                        break;
                     }
                 }
+
+                if ($scope.isTagsFilterOn){
+                        if (postList[i].tags.indexOf(term) >= 0) {
+                            out.push(postList[i]);
+                            break;
+                        }
+                    }               
+                
             }
 
 
