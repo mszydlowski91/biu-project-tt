@@ -171,9 +171,3 @@ app.filter('myfilter', function() {
 
 
 
-
-app.directive('post', function(){
-    return {
-        templateUrl: 'includes/post.html'
-    };
-});
