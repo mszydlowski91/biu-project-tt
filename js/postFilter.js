@@ -2,7 +2,7 @@
 var app = angular.module("blog");
 
 
-app.filter('myfilter', function() {
+app.filter('postFilter', function() {
     return function(postList, $scope) {
         var out = [];
         var term = $scope.filterTerm;
@@ -52,12 +52,8 @@ app.filter('myfilter', function() {
                             break;
                         }
                     }               
-                
             }
-
-
         }
-
     return out;
   }
 });
