@@ -1,6 +1,6 @@
 var app = angular.module("blog", []);
 
-app.controller("blogController", function($scope, $http, blogService) {
+app.controller("blogController", ['$scope', '$http', function($scope, $http) {
 
     var path = 'http://private-79b25-blogtt.apiary-mock.com';
     $scope.titleFilter = "";
@@ -36,8 +36,8 @@ app.controller("blogController", function($scope, $http, blogService) {
      	          console.log("error posting " + status);
             });
         }
-        $scope.title = $scope.initial;
-        $scope.text = $scope.initial;
+        $scope.title = "";
+        $scope.text = "";
         $scope.tags = [];
 
   	};
@@ -88,8 +88,8 @@ app.controller("blogController", function($scope, $http, blogService) {
                 $scope.existingPosts[$scope.editedPostIndex].text=$scope.text;
                 $scope.postList = $scope.existingPosts;
                 $scope.formMode = "NEW";
-                $scope.title = $scope.initial;
-                $scope.text = $scope.initial;
+                $scope.title = "";
+                $scope.text = "";
                 $scope.existingPosts = null;
                 $scope.editedPostIndex = null;
             })
@@ -102,9 +102,8 @@ app.controller("blogController", function($scope, $http, blogService) {
     $scope.cancelEdit = function (){
         $scope.formMode = "NEW";
         $scope.postList = $scope.existingPosts;
-        //$scope.text = $scope.initial;
         $scope.title = "";
         $scope.text = "";
     };
 
-});
+}]);
